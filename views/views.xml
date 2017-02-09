@@ -1,0 +1,211 @@
+<openerp>
+  <data>
+
+    
+    <record model="ir.ui.view" id="maplepick.view_picklist">
+      <field name="name">Picking Orders</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="priority">2</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="driverName"/>
+          <field name="schedule" />
+          <field name="barrelQty" />
+          <field name="write_date"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maplepick.view_picklist2">
+      <field name="name">Picking Orders</field>
+      <field name="model">mapleorder.order</field>
+      <field name="priority">2</field>
+      <field name="arch" type="xml">
+        <tree sum="quantity" create="false" edit="false">
+          <field name="region" />
+          <field name="quantity" />
+          <field name="productor" />
+          <field name="address" />
+          <field name="city" />
+          <field name="phone" />
+          <field name="pick_schedule"/>
+          <field name="write_date" />
+          <field name="pick_driver"/>
+        </tree>
+      </field>
+    </record>
+
+    <record model="ir.ui.view" id="maplepick.view_pickcalendar1">
+      <field name="name">Picking Calendar</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="priority">2</field>
+      <field name="arch" type="xml">
+        <calendar color="driver" date_start="schedule" string="Picking Calendar"
+                  display="[driver] -- [barrelQty] barils,  Producteurs: [prods]" mode="month" delete="false"
+                   quick_add="false">
+             <!--     event_open_popup="maplepick.form" -->
+          <field name="driver"/>
+          <field name="schedule"/>
+          <field name="prods"/>
+          <field name="barrelQty"/>
+        </calendar>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="maplepick.view_pickform">
+      <field name="name">Picking Order</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group string="Picking Order">
+              <group>
+                <field name="driver"/>
+                <field name="schedule"/>
+                <field name="completed"/>
+                <field name="barrelQty" readonly="True"/>
+              </group>
+              <group>
+                <img class="img img-responsive" style="width:200px;height:135px;float:right" src="/mapleorder/static/src/img/header.jpg"/>
+              </group>
+            </group>
+            <field name="order" widget="many2many" domain="[('pickid', '=', False)]" >
+              <tree>
+                <field name="productor" />
+                <field name="address" />
+                <field name="city" />
+                <field name="article" />
+                <field name="region"/>
+                <field name="quantity"/>
+                <field name="buyer" />
+              </tree>
+            </field>
+            <field name="note"/>
+
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="maplepick.view_orderpending">
+      <field name="name">Pending Orders</field>
+      <field name="model">mapleorder.order</field>
+      <field name="priority">2</field>
+      <field name="arch" type="xml">
+        <tree delete="false" create="false">
+          <field name="productor" />
+          <field name="address" />
+          <field name="city" />
+          <field name="region"/>
+          <field name="article" />
+          <field name="quantity"/>
+          <field name="buyer" />
+<!--          <field name="closed"/> -->
+        </tree>
+      </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="mapleorder.report_maplepick">
+      <field name="name">Picking Order Report</field>
+      <field name="model">mapleorder.maplepick</field>
+      <field name="arch" type="xml">
+        <pivot string="Picking Orders" display_quantity="true">
+          <field name="driver" type="row"/>
+          <field name="write_date" type="col"/>
+        </pivot>
+      </field>
+    </record>
+
+
+    <!-- actions opening views on models -->
+    <record model="ir.actions.act_window" id="maplepick.action_pickwindow">
+      <field name="name">Picking Orders</field>
+      <field name="res_model">mapleorder.maplepick</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="maplepick.action_reception_form11">
+      <field name="sequence" eval="2"/>
+      <field name="view_mode">form</field>
+      <field name="act_window_id" ref="maplepick.action_pickwindow"/>
+      <field name="view_id" ref="maplepick.view_pickform"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="maplepick.action_reception_tree11">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="act_window_id" ref="maplepick.action_pickwindow"/>
+        <field name="view_id" ref="maplepick.view_picklist"/>
+      </record>
+
+
+
+    <record model="ir.actions.act_window" id="maplepick.action_window3">
+      <field name="name">Orders by picking date</field>
+      <field name="view_id" ref="maplepick.view_picklist2" />
+      <field name="res_model">mapleorder.order</field>
+      <field name="view_mode">tree, form</field>
+      <field name="context">{'group_by':['pick_schedule:day', 'pick_driver']}</field>
+<!--      <field name="context">{'order': 'pick_schedule'}</field>  -->
+      <field name="domain">[('pick_driver','!=',False)]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maplepick.action_window4">
+      <field name="name">Orders To Be Assigned</field>
+      <field name="res_model">mapleorder.order</field>
+      <field name="view_mode">tree,form</field>
+      <field name="view_id" ref="maplepick.view_orderpending"/>
+      <field name="domain">[('pickid','=', False)]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maplepick.action_window5">
+      <field name="name">Picking Calendar</field>
+      <field name="res_model">mapleorder.maplepick</field>
+      <field name="view_mode">calendar, form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="maplepick.action_window6">
+      <field name="name">Picking Report</field>
+      <field name="res_model">mapleorder.maplepick</field>
+      <field name="view_mode">pivot</field>
+    </record>
+
+    <!-- server action to the one above -->
+    <!--
+    <record model="ir.actions.server" id="addons\maplepick.action_server">
+      <field name="name">addons\maplepick server</field>
+      <field name="model_id" ref="model_addons\maplepick_addons\maplepick"/>
+      <field name="code">
+        action = {
+          "type": "ir.actions.act_window",
+          "view_mode": "tree,form",
+          "res_model": self._name,
+        }
+      </field>
+    </record>
+    -->
+
+    <!-- Top menu item -->
+
+    <menuitem name="Maple Syrup Picking Orders" id="maplepick.menu_root" sequence="12"/>
+
+    <!-- menu categories -->
+    <menuitem name="Picking Orders" id="maplepick.menu_1" parent="maplepick.menu_root"/>
+
+    <!-- actions -->
+    <menuitem name="Picking Orders" id="maplepick.menu_1_list" parent="maplepick.menu_1"
+              action="maplepick.action_pickwindow"/>
+    <menuitem name="Picking Orders Listing" id="maplepick.menu_3_list" parent="maplepick.menu_1"
+              action="maplepick.action_window3"/>
+    <menuitem name="Picking Calendar" id="maplepick.menu_4_list" parent="maplepick.menu_1"
+              action="maplepick.action_window5"/>
+    
+    <menuitem name="Orders To Be Assigned" id="maplepick.menu_2_list" parent="maplepick.menu_1"
+              action="maplepick.action_window4"/>
+
+    <menuitem name="Picking Report" id="maplepick.menu9" parent="maplepick.menu_1"
+              action="maplepick.action_window6"/>
+  </data>
+</openerp>

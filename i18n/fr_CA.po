@@ -1,0 +1,68 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* maplepick
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 9.0c\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-06 15:32+0000\n"
+"PO-Revision-Date: 2017-01-06 15:32+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: maplepick
+#: model:ir.ui.menu,name:maplepick.menu_root
+msgid "Maple Syrup Picking Orders"
+msgstr "Bons de cueillette"
+
+#. module: maplepick
+#: model:ir.actions.act_window,name:maplepick.action_window4
+#: model:ir.ui.menu,name:maplepick.menu_2_list
+msgid "Orders To Be Assigned"
+msgstr "Commandes non assignées"
+
+#. module: maplepick
+#: model:ir.actions.act_window,name:maplepick.action_window3
+msgid "Orders by picking date"
+msgstr "Bons de cueillette détaillés par date"
+
+#. module: maplepick
+#: model:ir.actions.act_window,name:maplepick.action_window5
+#: model:ir.ui.menu,name:maplepick.menu_4_list
+#: model:ir.ui.view,arch_db:maplepick.view_pickcalendar1
+msgid "Picking Calendar"
+msgstr "Calendrier de cueillette"
+
+#. module: maplepick
+#: model:ir.ui.view,arch_db:maplepick.view_pickform
+msgid "Picking Order"
+msgstr "Bon de cueillette"
+
+#. module: maplepick
+#: model:ir.actions.act_window,name:maplepick.action_pickwindow
+#: model:ir.ui.menu,name:maplepick.menu_1
+#: model:ir.ui.menu,name:maplepick.menu_1_list
+msgid "Picking Orders"
+msgstr "Bons de cueillette"
+
+#. module: maplepick
+#: model:ir.ui.menu,name:maplepick.menu_3_list
+msgid "Picking Orders Listing"
+msgstr "Bons de cueillette détaillés par date"
+
+#. module: maplepick
+#: model:ir.actions.act_window,name:maplepick.action_window6
+#: model:ir.ui.menu,name:maplepick.menu9
+msgid "Picking Report"
+msgstr "Rapport Cueillette"
+
+#. module: maplepick
+#: model:ir.ui.view,arch_db:maplepick.view_picklist2
+msgid "quantity"
+msgstr "quantité"
+
